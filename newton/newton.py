@@ -7,10 +7,12 @@ Original file is located at
     https://colab.research.google.com/drive/1TnGRqa8ofMvG2-z5nV5C97-HoJFcC4Pe
 """
 
-!pip install streamlit pyngrok --quiet
+# Bagian ini seharusnya dijalankan di awal di Colab, bukan di dalam script Python utama
+# !pip install streamlit pyngrok --quiet
 
 import streamlit as st
 import time
+import os # Import os untuk operasi file
 
 def calculate_newton_law(law_type, mass=None, acceleration=None, force=None):
     """Menghitung berdasarkan Hukum Newton."""
@@ -185,16 +187,44 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # Saat menjalankan script ini sebagai file .py, bagian ngrok dan `streamlit run`
+    # harus dipisahkan atau dijalankan secara eksternal (misalnya di terminal/Colab cell terpisah).
 
-!ngrok config add-authtoken 2uzt3zck7DsFcgSphPuyEpHgUiN_3gijm7UyXNThGByqVsBhA
+    # Jika Anda ingin script ini berjalan sendiri dan kemudian meluncurkan Streamlit + ngrok,
+    # Anda perlu menyimpan kode Streamlit ini ke file Python, misalnya `app.py`.
+    # Kemudian, Anda bisa menjalankan perintah shell untuk `ngrok` dan `streamlit`
+    # di cell terpisah di Colab atau di terminal Anda.
 
-from pyngrok import ngrok
+    # Misal, simpan kode di atas ke file bernama `newton_app.py`.
+    # Lalu, di Colab cell terpisah:
 
-# Jalankan streamlit sebagai background process
-!streamlit run bmi_app.py &>/dev/null &
+    # 1. Install Streamlit dan pyngrok
+    # !pip install streamlit pyngrok --quiet
 
-# Hubungkan ke Streamlit via ngrok (versi baru)
-public_url = ngrok.connect(addr="8533", proto="http")
-print("Aplikasi bisa diakses di link berikut:")
-print(public_url)
+    # 2. Tambahkan auth token ngrok
+    # !ngrok config add-authtoken 2uzt3zck7DsFcgSphPuyEpHgUiN_3gijm7UyXNThGByqVsBhA
+
+    # 3. Buat file Streamlit dari kode di atas
+    # from pyngrok import ngrok
+    # import subprocess # Digunakan untuk menjalankan perintah shell di Python
+
+    # nama file aplikasi Streamlit Anda
+    # app_file_name = "newton_app.py"
+
+    # with open(app_file_name, "w") as f:
+    #     f.write("""
+    #     # Salin dan tempel seluruh kode Streamlit Anda di sini
+    #     # Dimulai dari import streamlit sampai if __name__ == "__main__": main()
+    #     # ... (kode Streamlit yang lengkap) ...
+    #     """)
+
+    # 4. Jalankan Streamlit sebagai background process
+    # subprocess.Popen(["streamlit", "run", app_file_name])
+
+    # 5. Hubungkan ke Streamlit via ngrok
+    # public_url = ngrok.connect(addr="8533", proto="http")
+    # print("Aplikasi bisa diakses di link berikut:")
+    # print(public_url)
+
+    # Untuk menjalankan aplikasi Streamlit secara lokal tanpa ngrok (jika tidak di Colab):
+    main() # Ini akan menjalankan aplikasi Streamlit jika Anda menjalankan file ini dengan `streamlit run nama_file.py`
